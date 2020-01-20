@@ -18,7 +18,7 @@ app.get('/', function(req,res){
 		var count = results[0].count;
 		//res.send("We have " + count + " people in our database");
 		//res.send("Online Mass Claims");
-		res.render("landing", {data: countc});
+		res.render("landing", {data: count});
 	});
 	
 });
@@ -27,3 +27,4 @@ app.get('/', function(req,res){
 app.listen(3000, function(){
 	console.log('app is connected');
 });
+
