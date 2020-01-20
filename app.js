@@ -18,7 +18,7 @@ app.get('/', function(req,res){
 		var count = results[0].count;
 		//res.send("We have " + count + " people in our database");
 		//res.send("Online Mass Claims");
-		res.render("landing");
+		res.render("landing", {data: countc});
 	});
 	
 });
