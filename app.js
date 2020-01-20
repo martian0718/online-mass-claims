@@ -23,6 +23,10 @@ app.get('/', function(req,res){
 	
 });
 
+app.get('/output', function(req,res){
+	res.render("output");
+});
+
 
 app.listen(3000, function(){
 	console.log('app is connected');
