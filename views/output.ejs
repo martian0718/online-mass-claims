@@ -1,3 +1,60 @@
-<h1>
-	This is the output page!
-</h1>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Online Mass Claims Exercise</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link href="https://cdn.jsdelivr.net/npm/jQuery-QueryBuilder/dist/css/query-builder.default.min.css">
+    </head>
+    <body>
+		<h1>Online Mass Claims Exercise</h1>
+
+		<p>This is the Outputs page!</p>
+		<a class = "btn btn-success" href = "/">
+			Go back
+		</a>
+		
+		<table class = "table">
+			<thead>
+				<tr>
+				<th scope="col">First</th>
+				<th scope="col">Last</th>
+				<th scope="col">Years at Allied</th>
+				<th scope="col">Deceased</th>
+				<th scope="col">Smoker</th>
+				<th scope="col">Severity</th>
+				<th scope="col">Medical Expenses Paid</th>
+				</tr>
+			</thead>
+			<tbody>
+				<%dataset.forEach(function(data){%>
+				<tr>
+					<td><h5><%=data.firstName%></h5></td>
+					<td><h5><%=data.lastName%></h5></td>
+					<td><h5><%=data.yearsAtAllied%></h5></td>
+					<%if(data.deceased == 0){%>
+						<td><h5>False</h5></td>
+					<%} else {%>
+						<td><h5>True</h5></td>
+					<%}%>
+					<%if(data.smoker == 0){%>
+						<td><h5>False</h5></td>
+					<%} else {%>
+						<td><h5>True</h5></td>
+					<%}%>
+					<td><h5><%=data.severity%></h5></td>
+					<td><h5><%=data.medicalPaid%></h5></td>
+				</tr>
+				<%});%>
+			</tbody>
+		</table>
+		
+			
+		
+	
+  
+    
+	</body>
+	
+	
+	
+</html>

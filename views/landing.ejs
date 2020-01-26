@@ -2,19 +2,140 @@
 <html>
     <head>
         <title>Online Mass Claims Exercise</title>
-		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-		<link href="https://cdn.jsdelivr.net/npm/jQuery-QueryBuilder/dist/css/query-builder.default.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
     <body>
+		
 		<h1>Online Mass Claims Exercise</h1>
 
 		<p>There are <%=data%> people in our database!</p>
-
-		<div id = "builder"></div>
+		
+		<div class = "container">
+			<div id="builder"></div>
+			
+			<form action="/" method="post">
+				<div class="form-group">
+					<label class = "pt-5" for="x">Value X</label>
+					<input class="form-control" id = "x" type="number" step = "0.00001" min = "0" max = "100" name="x">
+				</div>
+				<div class="form-group">
+					<label class = "pt-5" for="y">Value Y</label>
+					<input class="form-control" id = "y" type="number" step = "0.00001" min = "0" max = "100" name="y">
+				</div>
+				<div class="form-group">
+					<label class = "pt-5" for="z">Value Z</label>
+					<input class="form-control" id = "z" type="number" step = "0.00001" min = "0" max = "100" name="z">
+				</div>
+				<div class="form-group">
+					<label class = "pt-5" for="amt">AMT</label>
+					<input class="form-control" id = "amt" type="number" step = "0.00001" min = "0" max = "100" name="amt">
+				</div>
+				<div class="form-group">
+					<button class="btn btn-lg btn-primary btn-block">Submit</button>
+				</div>
+        	</form>
+		</div>
+		<script>
+		</script>
+		
+		
+		
+			
+		
+  		<button class="btn btn-success" id="btn-set">Set Rules</button>
+  		<button class="btn btn-primary" id="btn-get">Get Rules</button>
+  		<button class="btn btn-warning" id="btn-reset">Reset</button>
+  		<button class="btn btn-success" id="btn-set-sql">Set MySQL Rules</button>
+  		<button class="btn btn-primary" id="btn-get-sql">Get MySQL Rules</button>
+  		
+		
+		
+		<a class = "btn btn success" href="/output">
+			GET OUTPUT
+		</a>
+		
+		
+		
 	</body>
 	
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/jQuery-QueryBuilder/dist/js/query-builder.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jQuery-QueryBuilder/dist/js/query-builder.standalone.min.js"></script>
+	<!-- SQLParser from https://www.npmjs.com/package/sql-parser-mistic -->
+	<script src="sql-parser-mistic/browser/sql-parser.js"></script>
+	<script>
+		
+			var rules_basic = {
+				rules: [{
+					id: 'yearsAtAllied',
+					operatior: 'equal',
+					value: '1'
+				}]
+			};
+			$('#builder').queryBuilder({
+				
+				filters: [
+					{
+						id: 'yearsAtAllied',
+						label: 'Years at Allied',
+						type: 'integer',
+						validation: {
+							min: 0
+						}
+					},
+					{
+						id: 'smoker',
+						label: 'Smoker',
+						type: 'integer'
+					},
+					{
+						id: 'severity',
+						label: 'Severity',
+						type: 'integer',
+						validation: {
+							min: 1
+						}
+					},
+					{
+						id: 'medicalPaid',
+						label: 'Medical expenses paid',
+						type: 'integer',
+						validation: {
+							min: 0
+						}
+					}
+				],
+				rules: rules_basic
+			});
+		
+		
+			$('#btn-reset').on('click', function() {
+			  $('#builder').queryBuilder('reset');
+			});
+
+			$('#btn-set').on('click', function() {
+			  $('#builder').queryBuilder('setRules', rules_basic);
+			});
+
+			$('#btn-get').on('click', function() {
+			  var result = $('#builder').queryBuilder('getRules');
+			  if (!$.isEmptyObject(result)) {
+				alert(JSON.stringify(result, null, 2));
+			 }
+			});
+			
+			$('#btn-set-sql').on('click', function() {
+			  $('#builder').queryBuilder('setSQL', rules_basic);
+			});
+
+			$('#btn-get-sql').on('click', function() {
+			  var result = $('#builder').queryBuilder('getSQL', false);
+			  console.log(result); //what does result look like?
+			  if (result.sql.length) {
+				alert(result.sql + '\n\n' + JSON.stringify(result.params, null, 2));
+			  }
+			});
+		</script>
+	
 </html>
 
 
